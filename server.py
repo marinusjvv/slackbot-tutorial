@@ -19,20 +19,14 @@ def command():
   SLACK_SIGNATURE = os.environ['SLACK_SIGNATURE']
 
   verifier = SignatureVerifier(SLACK_SIGNATURE)
-  commander = Slash(verifier)
+  slack_client = WebClient(SLACK_BOT_TOKEN)
+  info = request.form
+  commander = Slash(verifier, client, info)
+
   if not commander.verify(request):
     return make_response("invalid request", 403)
 
 
-  slack_client = WebClient(SLACK_BOT_TOKEN)
-
-
-  logging.debug('YYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
-  logging.debug(__name__)
-  logging.debug('YYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
-  if not verifier.is_valid_request(request.get_data(), request.headers):
-    return make_response("invalid request", 403)
-  info = request.form
 
   # # send user a response via DM
   # im_id = slack_client.im_open(user=info["user_id"])["channel"]["id"]
