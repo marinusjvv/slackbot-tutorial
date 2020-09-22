@@ -27,11 +27,6 @@ def command():
   slack_client = WebClient(SLACK_BOT_TOKEN)
 
 
-  logging.debug('YYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
-  logging.debug(__name__)
-  logging.debug('YYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
-  if not verifier.is_valid_request(request.get_data(), request.headers):
-    return make_response("invalid request", 403)
   info = request.form
 
   # # send user a response via DM
