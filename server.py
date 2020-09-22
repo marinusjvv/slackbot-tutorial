@@ -46,8 +46,8 @@ def command():
   return make_response("", response.status_code)
 
 # Start the Flask server
-if __name__ == "__server__":
-  logging.debug('in __server__')
+if __name__ == "__main__":
+  logging.debug('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
   SLACK_BOT_TOKEN = os.environ['SLACK_BOT_TOKEN']
   SLACK_SIGNATURE = os.environ['SLACK_SIGNATURE']
   slack_client = WebClient(SLACK_BOT_TOKEN)
