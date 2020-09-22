@@ -11,7 +11,7 @@ class Slash():
     return self.verifier.is_valid_request(request.get_data(), request.headers)
 
   def process(self):
-    pprint(info)
+    pprint(self.info)
 
   def send():
     # # send user a response via DM
