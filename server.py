@@ -46,7 +46,7 @@ def command():
 
   try:
     response = slack_client.conversations_create(
-      name='temp-channel3'
+      name='temp-channel4'
     )
   except SlackApiError as e:
     logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
@@ -56,7 +56,7 @@ def command():
   try:
     response = slack_client.chat_postMessage(
       channel='#{}'.format(info["channel_name"]),
-      text='Created new channel #temp-channel3',
+      text='Created new channel #temp-channel4',
       link_names=1
     )
   except SlackApiError as e:
@@ -64,7 +64,12 @@ def command():
     logging.error(e.response)
     return make_response("", e.response.status_code)
 
-  return make_response("", response.status_code)
+  try:
+    return commander.message(slack_client)
+  except SlackApiError as e:
+    logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
+    logging.error(e.response)
+    return make_response("", e.response.status_code)
 
 # Start the Flask server
 if __name__ == "__main__":
