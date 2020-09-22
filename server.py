@@ -28,6 +28,8 @@ def command():
 
 
   info = request.form
+  logging.debug('AAAAAAAAAAAAAAAAAAAAAA')
+  logging.debug(info)
 
   # # send user a response via DM
   # im_id = slack_client.im_open(user=info["user_id"])["channel"]["id"]
@@ -44,7 +46,7 @@ def command():
 
   try:
     response = slack_client.conversations_create(
-      name='temp-channel2'
+      name='temp-channel3'
     )
   except SlackApiError as e:
     logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
@@ -54,7 +56,8 @@ def command():
   try:
     response = slack_client.chat_postMessage(
       channel='#{}'.format(info["channel_name"]),
-      text='Created new channel #temp-channel2'
+      text='Created new channel #temp-channel3',
+      link_names=1
     )
   except SlackApiError as e:
     logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
