@@ -12,6 +12,7 @@ from slashCommand import Slash
 
 logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__)
+logging.debug('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
 
 @app.route("/slack/test", methods=["POST"])
 def command():
