@@ -65,7 +65,7 @@ def command():
     return make_response("", e.response.status_code)
 
   try:
-    return commander.message(slack_client)
+    return commander.message(slack_client, info)
   except SlackApiError as e:
     logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
     logging.error(e.response)
