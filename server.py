@@ -46,6 +46,8 @@ def command():
 
   return make_response("", response.status_code)
 
+logging.debug('flat')
+logging.debug(__name__)
 # Start the Flask server
 if __name__ == "__main__":
   logging.debug('in main')
