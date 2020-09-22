@@ -53,12 +53,11 @@ logging.debug('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
 # Start the Flask server
 if __name__ == "__main__":
-  logging.debug('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ')
   SLACK_BOT_TOKEN = os.environ['SLACK_BOT_TOKEN']
   SLACK_SIGNATURE = os.environ['SLACK_SIGNATURE']
   slack_client = WebClient(SLACK_BOT_TOKEN)
   verifier = SignatureVerifier(SLACK_SIGNATURE)
 
   commander = Slash("Hey there! It works.")
-
+  logging.debug('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ')
   app.run()
