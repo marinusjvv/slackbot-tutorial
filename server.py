@@ -15,12 +15,16 @@ app = Flask(__name__)
 
 @app.route("/slack/test", methods=["POST"])
 def command():
+  verifier = SignatureVerifier(SLACK_SIGNATURE)
+  commander = Slash(verifier)
+  if not commander.verify(request):
+    return make_response("invalid request", 403)
+
   SLACK_BOT_TOKEN = os.environ['SLACK_BOT_TOKEN']
   SLACK_SIGNATURE = os.environ['SLACK_SIGNATURE']
   slack_client = WebClient(SLACK_BOT_TOKEN)
-  verifier = SignatureVerifier(SLACK_SIGNATURE)
 
-  commander = Slash("Hey there! It works.")
+
   logging.debug('YYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
   logging.debug(__name__)
   logging.debug('YYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
@@ -44,7 +48,7 @@ def command():
   try:
     response = slack_client.chat_postMessage(
       channel='#{}'.format(info["channel_name"]), 
-      text=commander.getMessage()
+      text='aaaa'
     )#.get()
   except SlackApiError as e:
     logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
@@ -53,17 +57,6 @@ def command():
 
   return make_response("", response.status_code)
 
-logging.debug('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-logging.debug(__name__)
-logging.debug('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-
 # Start the Flask server
 if __name__ == "__main__":
-  #SLACK_BOT_TOKEN = os.environ['SLACK_BOT_TOKEN']
-  #SLACK_SIGNATURE = os.environ['SLACK_SIGNATURE']
-  #slack_client = WebClient(SLACK_BOT_TOKEN)
-  #verifier = SignatureVerifier(SLACK_SIGNATURE)
-
-  #commander = Slash("Hey there! It works.")
-  logging.debug('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ')
   app.run()
