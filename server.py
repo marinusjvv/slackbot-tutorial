@@ -42,10 +42,12 @@ def command():
   # )
 
   try:
+    logging.debug('XXXXXXXXXXXXXXX')
     response = slack_client.chat_postMessage(
       channel='#{}'.format(info["channel_name"]), 
       text='aaaa'
     )#.get()
+    logging.debug('XXXXXXXXXXXXXXX')
   except SlackApiError as e:
     logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
     logging.error(e.response)
