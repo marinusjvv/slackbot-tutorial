@@ -52,7 +52,7 @@ logging.debug(__name__)
 logging.debug('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
 # Start the Flask server
-if __name__ == "__main__":
+if __name__ == "server":
   logging.debug('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ')
   SLACK_BOT_TOKEN = os.environ['SLACK_BOT_TOKEN']
   SLACK_SIGNATURE = os.environ['SLACK_SIGNATURE']
