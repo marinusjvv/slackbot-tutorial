@@ -21,7 +21,7 @@ def command():
   verifier = SignatureVerifier(SLACK_SIGNATURE)
   slack_client = WebClient(SLACK_BOT_TOKEN)
   info = request.form
-  commander = Slash(verifier, client, info)
+  commander = Slash(verifier, slack_client, info)
 
   if not commander.verify(request):
     return make_response("invalid request", 403)
