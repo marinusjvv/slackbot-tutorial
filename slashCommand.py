@@ -10,7 +10,7 @@ class Slash():
     return self.verifier.is_valid_request(request.get_data(), request.headers)
 
   def message(self, slack_client, info):
-    if info.text.startswith('create'):
+    if info['text'].startswith('create'):
       chanName = info.text.replace('create ','')
       chanName.replace(' ','-')
 
