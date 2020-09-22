@@ -15,13 +15,15 @@ app = Flask(__name__)
 
 @app.route("/slack/test", methods=["POST"])
 def command():
+  SLACK_BOT_TOKEN = os.environ['SLACK_BOT_TOKEN']
+  SLACK_SIGNATURE = os.environ['SLACK_SIGNATURE']
+
   verifier = SignatureVerifier(SLACK_SIGNATURE)
   commander = Slash(verifier)
   if not commander.verify(request):
     return make_response("invalid request", 403)
 
-  SLACK_BOT_TOKEN = os.environ['SLACK_BOT_TOKEN']
-  SLACK_SIGNATURE = os.environ['SLACK_SIGNATURE']
+
   slack_client = WebClient(SLACK_BOT_TOKEN)
 
 
