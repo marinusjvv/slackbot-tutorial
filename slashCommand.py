@@ -6,6 +6,3 @@ class Slash():
 
   def verify(self, request):
     return self.verifier.is_valid_request(request.get_data(), request.headers)
-
-  def process(self):
-      return self.msg
