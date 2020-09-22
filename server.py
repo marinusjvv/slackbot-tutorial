@@ -46,7 +46,7 @@ def command():
 
   try:
     response = slack_client.conversations_create(
-      name='temp-channel6'
+      name='temp-channel7'
     )
   except SlackApiError as e:
     logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
@@ -56,7 +56,7 @@ def command():
   try:
     response = slack_client.chat_postMessage(
       channel='#{}'.format(info["channel_name"]),
-      text='Created new channel #temp-channel6',
+      text='Created new channel #temp-channel7',
       link_names=1
     )
   except SlackApiError as e:
@@ -65,8 +65,7 @@ def command():
     return make_response("", e.response.status_code)
 
   try:
-    commander.message(slack_client, info)
-    return make_response("", 200)
+    return commander.message(slack_client, info)
   except SlackApiError as e:
     logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
     logging.error(e.response)

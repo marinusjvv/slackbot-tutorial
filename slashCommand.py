@@ -14,4 +14,4 @@ class Slash():
       text='sdfdfsdfsdf',
       link_names=1
     )
-    return make_response("", response.status_code)
+    return make_response("", 200)
