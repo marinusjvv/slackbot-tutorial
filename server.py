@@ -11,7 +11,6 @@ from slack.signature import SignatureVerifier
 from slashCommand import Slash
 
 logging.basicConfig(level=logging.DEBUG)
-logging.debug('main part')
 app = Flask(__name__)
 
 @app.route("/slack/test", methods=["POST"])
@@ -46,11 +45,9 @@ def command():
 
   return make_response("", response.status_code)
 
-logging.debug('flat')
-logging.debug(__name__)
 # Start the Flask server
-if __name__ == "__main__":
-  logging.debug('in main')
+if __name__ == "__server__":
+  logging.debug('in __server__')
   SLACK_BOT_TOKEN = os.environ['SLACK_BOT_TOKEN']
   SLACK_SIGNATURE = os.environ['SLACK_SIGNATURE']
   slack_client = WebClient(SLACK_BOT_TOKEN)
