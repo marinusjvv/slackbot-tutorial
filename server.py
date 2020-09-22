@@ -15,6 +15,12 @@ app = Flask(__name__)
 
 @app.route("/slack/test", methods=["POST"])
 def command():
+  SLACK_BOT_TOKEN = os.environ['SLACK_BOT_TOKEN']
+  SLACK_SIGNATURE = os.environ['SLACK_SIGNATURE']
+  slack_client = WebClient(SLACK_BOT_TOKEN)
+  verifier = SignatureVerifier(SLACK_SIGNATURE)
+
+  commander = Slash("Hey there! It works.")
   logging.debug('YYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
   logging.debug(__name__)
   logging.debug('YYYYYYYYYYYYYYYYYYYYYYYYYYYYY')
@@ -53,11 +59,11 @@ logging.debug('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
 # Start the Flask server
 if __name__ == "__main__":
-  SLACK_BOT_TOKEN = os.environ['SLACK_BOT_TOKEN']
-  SLACK_SIGNATURE = os.environ['SLACK_SIGNATURE']
-  slack_client = WebClient(SLACK_BOT_TOKEN)
-  verifier = SignatureVerifier(SLACK_SIGNATURE)
+  #SLACK_BOT_TOKEN = os.environ['SLACK_BOT_TOKEN']
+  #SLACK_SIGNATURE = os.environ['SLACK_SIGNATURE']
+  #slack_client = WebClient(SLACK_BOT_TOKEN)
+  #verifier = SignatureVerifier(SLACK_SIGNATURE)
 
-  commander = Slash("Hey there! It works.")
+  #commander = Slash("Hey there! It works.")
   logging.debug('ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ')
   app.run()
