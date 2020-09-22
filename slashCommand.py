@@ -2,9 +2,9 @@ from pprint import pprint
 
 class Slash():
 
-  def __init__(self, verifier, client, info):
+  def __init__(self, verifier, slack_client, info):
     self.verifier = verifier
-    self.client = client
+    self.slack_client = slack_client
     self.info = info
 
   def verify(self, request):
@@ -28,13 +28,13 @@ class Slash():
     # )
 
     try:
-    response = slack_client.chat_postMessage(
-      channel='#{}'.format(info["channel_name"]),
-      text='aaaa'
-    )#.get()
+      response = self.slack_client.chat_postMessage(
+        channel='#{}'.format(info["channel_name"]),
+        text='aaaa'
+      )#.get()
     except SlackApiError as e:
-    logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
-    logging.error(e.response)
-    return make_response("", e.response.status_code)
+      logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
+      logging.error(e.response)
+      return make_response("", e.response.status_code)
 
     return make_response("", response.status_code)
