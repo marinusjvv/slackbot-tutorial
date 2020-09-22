@@ -11,10 +11,12 @@ from slack.signature import SignatureVerifier
 from slashCommand import Slash
 
 logging.basicConfig(level=logging.DEBUG)
+logger.debug('main part')
 app = Flask(__name__)
 
 @app.route("/slack/test", methods=["POST"])
 def command():
+  logger.debug('def command')
   if not verifier.is_valid_request(request.get_data(), request.headers):
     return make_response("invalid request", 403)
   info = request.form
@@ -46,6 +48,7 @@ def command():
 
 # Start the Flask server
 if __name__ == "__main__":
+  logger.debug('in main')
   SLACK_BOT_TOKEN = os.environ['SLACK_BOT_TOKEN']
   SLACK_SIGNATURE = os.environ['SLACK_SIGNATURE']
   slack_client = WebClient(SLACK_BOT_TOKEN)
