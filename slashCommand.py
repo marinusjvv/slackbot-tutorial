@@ -5,7 +5,7 @@ class Slash():
     self.verifier = verifier
 
   def verify(request):
-    return verifier.is_valid_request(request.get_data(), request.headers)
+    return self.verifier.is_valid_request(request.get_data(), request.headers)
 
   def process(self):
       return self.msg
