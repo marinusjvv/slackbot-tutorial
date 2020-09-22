@@ -11,7 +11,7 @@ class Slash():
 
   def message(self, slack_client, info):
     if info['text'].startswith('create'):
-      chanName = info.text.replace('create ','')
+      chanName = info['text'].replace('create ','')
       chanName.replace(' ','-')
 
       try:
