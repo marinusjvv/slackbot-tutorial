@@ -46,11 +46,10 @@ def command():
     response = slack_client.chat_postMessage(
       channel='#{}'.format(info["channel_name"]),
       text='aaaa'
-    )#.get()
+    )
     response = slack_client.conversations_create(
-      name='temp-channel',
-      is_private=false
-    )#.get()
+      name='temp-channel'
+    )
   except SlackApiError as e:
     logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
     logging.error(e.response)
