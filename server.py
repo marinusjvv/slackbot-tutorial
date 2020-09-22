@@ -46,7 +46,7 @@ def command():
 
 # Start the Flask server
 if __name__ == "__main__":
-  SLACK_BOT_TOKEN = 'xoxb-1390984204065-1371664617398-IbhhkgLW8bqYxEZo1ENDWzxs'
+  SLACK_BOT_TOKEN = os.environ['SLACK_BOT_TOKEN']
   SLACK_SIGNATURE = os.environ['SLACK_SIGNATURE']
   slack_client = WebClient(SLACK_BOT_TOKEN)
   verifier = SignatureVerifier(SLACK_SIGNATURE)
