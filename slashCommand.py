@@ -53,8 +53,7 @@ class Slash():
         "type": "header",
         "text": {
           "type": "plain_text",
-          "text": "Some useful commands",
-          "emoji": "true"
+          "text": "Some useful commands"
         }
       },
       {
