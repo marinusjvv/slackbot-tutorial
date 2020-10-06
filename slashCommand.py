@@ -18,6 +18,8 @@ class Slash():
     if info['text'].startswith('bump'):
       return self.processBumpCommand(slack_client, info)
 
+    return self.processHelpCommand(slack_client, info)
+
   def processCreateCommand(self, slack_client, info):
     expiresDate = datetime.today() + relativedelta(months=+1)
     chanName = info['text'].replace('create ','')
@@ -45,23 +47,30 @@ class Slash():
     #datetime.fromisoformat()
     return self.sendResponse(slack_client, info, 'sweet as')
 
-  def sendResponse(self, slack_client, info, responseMessage):
+  def processHelpCommand(self, slack_client, info):
+    if not info["channel_name"].startswith('temp-'):
+      return self.sendResponse(slack_client, info, 'Please use this command from a temporary channel')
+
+
+
+    #datetime.fromisoformat()
+    return self.sendResponse(slack_client, info, 'sweet as')
+
+  def sendResponse(self, slack_client, info, responseMessage, type = 'text'):
     try:
       if info["channel_name"] == 'directmessage':
-        im_id = slack_client.conversations_open(
+        outChannel = slack_client.conversations_open(
           users=info["user_id"]
         )["channel"]["id"]
-        ownerMsg = slack_client.chat_postMessage(
-          channel=im_id,
-          text=responseMessage,
-          link_names=1
-        )
       else:
-        slack_client.chat_postMessage(
-          channel='#{}'.format(info["channel_name"]),
-          text=responseMessage,
-          link_names=1
-        )
+        outChannel = '#{}'.format(info["channel_name"])
+
+      params = "%s='%s'"%(type, responseMessage)
+      slack_client.chat_postMessage(
+        channel=outChannel,
+        link_names=1,
+        params
+      )
     except SlackApiError as e:
       logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
       logging.error(e.response)
