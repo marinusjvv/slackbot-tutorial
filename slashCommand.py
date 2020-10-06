@@ -15,10 +15,9 @@ class Slash():
   def processCommand(self, slack_client, info):
     if info['text'].startswith('create'):
       expiresDate = date.today() + relativedelta(months=+1)
-      logging.error(expiresDate.strftime('%Y-%m-%d'))
       chanName = info['text'].replace('create ','')
       chanName = chanName.replace(' ','-')
-      chanName = 'temp-' + chanName
+      chanName = 'temp-' + chanName + expiresDate.strftime('%Y%m%d%H%i%s')
 
       try:
         slack_client.conversations_create(
