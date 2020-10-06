@@ -32,12 +32,12 @@ class Slash():
     )
 
     responseMessage = 'Created new channel #' + chanName + ' which expires ' + expiresDate.strftime('%Y-%m-%d %H:%M:%S')
-    self.sendResponse(slack_client, info, responseMessage)
+    self.sendResponse(info["channel_name"], slack_client, info, responseMessage)
 
   def processBumpCommand(self, slack_client, info):
     channelName = info["channel_name"]
     if not channelName.startswith('temp-'):
-      return self.sendResponse(slack_client, info, 'Please use this command from a temporary channel')
+      return self.sendResponse(info["channel_name"], slack_client, info, 'Please use this command from a temporary channel')
 
     expires = channelName.rpartition('-')[-1]
     expiresDate = datetime.strptime(expires, '%Y%m%d%H%M%S')
@@ -49,8 +49,7 @@ class Slash():
       channel=info["channel_id"],
       name=newChannelName
     )
-    info['channel_name'] = newChannelName
-    self.sendResponse(slack_client, info, 'Channel bumped, new expiration date ' + expiresDate.strftime('%Y-%m-%d %H:%M:%S'))
+    self.sendResponse(newChannelName, slack_client, info, 'Channel bumped, new expiration date ' + expiresDate.strftime('%Y-%m-%d %H:%M:%S'))
 
   def processHelpCommand(self, slack_client, info):
     block = [
@@ -100,15 +99,15 @@ class Slash():
         }
       }
     ]
-    self.sendResponse(slack_client, info, block, 'blocks')
+    self.sendResponse(info["channel_name"], slack_client, info, block, 'blocks')
 
-  def sendResponse(self, slack_client, info, responseMessage, type = 'text'):
-    if info["channel_name"] == 'directmessage':
+  def sendResponse(self, channelName, slack_client, info, responseMessage, type = 'text'):
+    if channelName == 'directmessage':
       outChannel = slack_client.conversations_open(
         users=info["user_id"]
       )["channel"]["id"]
     else:
-      outChannel = '#{}'.format(info["channel_name"])
+      outChannel = '#{}'.format(channelName)
 
     kwargs = {
       "channel": outChannel,
