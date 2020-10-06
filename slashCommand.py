@@ -35,12 +35,14 @@ class Slash():
     self.sendResponse(slack_client, info, responseMessage)
 
   def processBumpCommand(self, slack_client, info):
-    if not info["channel_name"].startswith('temp-'):
+    channelName = info["channel_name"]
+    if not channelName.startswith('temp-'):
       return self.sendResponse(slack_client, info, 'Please use this command from a temporary channel')
 
-    expires = info["channel_name"].rpartition('-')[-1]
+    expires = channelName.rpartition('-')[-1]
     expiresDate = datetime.strptime(expires, '%Y%m%d%H%M%S')
-    self.sendResponse(slack_client, info, 'current expires at' + expiresDate.strftime('%Y-%m-%d %H:%M:%S'))
+    expiresDate = expiresDate + relativedelta(weeks=+2)
+    self.sendResponse(slack_client, info, 'new expires at' + expiresDate.strftime('%Y-%m-%d %H:%M:%S'))
 
   def processHelpCommand(self, slack_client, info):
     block = [
