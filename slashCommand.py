@@ -1,5 +1,6 @@
 import logging
 from flask import Flask, request, make_response, Response
+from slack.errors import SlackApiError
 
 class Slash():
 
@@ -12,7 +13,7 @@ class Slash():
   def message(self, slack_client, info):
     if info['text'].startswith('create'):
       chanName = info['text'].replace('create ','')
-      chanName.replace(' ','-')
+      chanName = chanName.replace(' ','-')
 
       try:
         slack_client.conversations_create(

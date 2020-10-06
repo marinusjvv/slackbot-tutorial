@@ -5,7 +5,6 @@ import logging
 from flask import Flask, request, make_response, Response
 
 from slack.web.client import WebClient
-from slack.errors import SlackApiError
 from slack.signature import SignatureVerifier
 
 from slashCommand import Slash
@@ -28,8 +27,8 @@ def command():
 
 
   info = request.form
-  logging.debug('AAAAAAAAAAAAAAAAAAAAAA')
-  logging.debug(info)
+  #logging.debug('AAAAAAAAAAAAAAAAAAAAAA')
+  #logging.debug(info)
 
   # # send user a response via DM
   # im_id = slack_client.im_open(user=info["user_id"])["channel"]["id"]
