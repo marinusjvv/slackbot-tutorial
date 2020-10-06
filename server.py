@@ -6,6 +6,7 @@ from flask import Flask, request, make_response, Response
 
 from slack.web.client import WebClient
 from slack.signature import SignatureVerifier
+from slack.errors import SlackApiError
 
 from slashCommand import Slash
 
@@ -24,7 +25,12 @@ def command():
 
   slack_client = WebClient(SLACK_BOT_TOKEN)
   info = request.form
-  return commander.processCommand(slack_client, info)
+
+  try :
+    commander.processCommand(slack_client, info)
+    return make_response("", 200)
+  except SlackApiError as e:
+    return make_response("", e.response.status_code)
 
 # Start the Flask server
 if __name__ == "__main__":

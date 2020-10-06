@@ -14,11 +14,13 @@ class Slash():
 
   def processCommand(self, slack_client, info):
     if info['text'].startswith('create'):
-      return self.processCreateCommand(slack_client, info)
+      self.processCreateCommand(slack_client, info)
+      return
     if info['text'].startswith('bump'):
-      return self.processBumpCommand(slack_client, info)
+      self.processBumpCommand(slack_client, info)
+      return
 
-    return self.processHelpCommand(slack_client, info)
+    self.processHelpCommand(slack_client, info)
 
   def processCreateCommand(self, slack_client, info):
     expiresDate = datetime.today() + relativedelta(months=+1)
@@ -26,17 +28,12 @@ class Slash():
     chanName = chanName.replace(' ','-')
     chanName = 'temp-' + chanName + '-' + expiresDate.strftime('%Y%m%d%H%M%S')
 
-    try:
-      slack_client.conversations_create(
-        name=chanName
-      )
-    except SlackApiError as e:
-      logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
-      logging.error(e.response)
-      return make_response("", e.response.status_code)
+    slack_client.conversations_create(
+      name=chanName
+    )
 
     responseMessage = 'Created new channel #' + chanName + ' which expires ' + expiresDate.strftime('%Y-%m-%d %H:%M:%S')
-    return self.sendResponse(slack_client, info, responseMessage)
+    self.sendResponse(slack_client, info, responseMessage)
 
   def processBumpCommand(self, slack_client, info):
     if not info["channel_name"].startswith('temp-'):
@@ -45,7 +42,7 @@ class Slash():
 
 
     #datetime.fromisoformat()
-    return self.sendResponse(slack_client, info, 'sweet as')
+    self.sendResponse(slack_client, info, 'sweet as')
 
   def processHelpCommand(self, slack_client, info):
     block = [
@@ -95,26 +92,19 @@ class Slash():
         }
       }
     ]
-    return self.sendResponse(slack_client, info, block, 'blocks')
+    self.sendResponse(slack_client, info, block, 'blocks')
 
   def sendResponse(self, slack_client, info, responseMessage, type = 'text'):
-    try:
-      if info["channel_name"] == 'directmessage':
-        outChannel = slack_client.conversations_open(
-          users=info["user_id"]
-        )["channel"]["id"]
-      else:
-        outChannel = '#{}'.format(info["channel_name"])
+    if info["channel_name"] == 'directmessage':
+      outChannel = slack_client.conversations_open(
+        users=info["user_id"]
+      )["channel"]["id"]
+    else:
+      outChannel = '#{}'.format(info["channel_name"])
 
-      kwargs = {
-        "channel": outChannel,
-        "link_names": 1,
-      }
-      kwargs[type] = responseMessage
-      slack_client.chat_postMessage(**kwargs)
-    except SlackApiError as e:
-      logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
-      logging.error(e.response)
-      return make_response("", e.response.status_code)
-
-    return make_response("", 200)
+    kwargs = {
+      "channel": outChannel,
+      "link_names": 1,
+    }
+    kwargs[type] = responseMessage
+    slack_client.chat_postMessage(**kwargs)
