@@ -27,8 +27,8 @@ def command():
 
 
   info = request.form
-  #logging.debug('AAAAAAAAAAAAAAAAAAAAAA')
-  #logging.debug(info)
+  logging.debug('AAAAAAAAAAAAAAAAAAAAAA')
+  logging.debug(info)
 
   # # send user a response via DM
   # im_id = slack_client.im_open(user=info["user_id"])["channel"]["id"]
