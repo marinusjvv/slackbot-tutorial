@@ -38,10 +38,9 @@ class Slash():
     if not info["channel_name"].startswith('temp-'):
       return self.sendResponse(slack_client, info, 'Please use this command from a temporary channel')
 
-
-
-    #datetime.fromisoformat()
-    self.sendResponse(slack_client, info, 'sweet as')
+    expires = info["channel_name"].rpartition('-')[-1]
+    expiresDate = datetime.strptime(expires, '%Y%m%d%H%M%S')
+    self.sendResponse(slack_client, info, 'current expires at' + expiresDate.strftime('%Y-%m-%d %H:%M:%S'))
 
   def processHelpCommand(self, slack_client, info):
     block = [
