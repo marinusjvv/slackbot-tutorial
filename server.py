@@ -30,6 +30,8 @@ def command():
     commander.processCommand(slack_client, info)
     return make_response("", 200)
   except SlackApiError as e:
+    logging.error("AAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    logging.error(e)
     return make_response("", e.response.status_code)
 
 # Start the Flask server
