@@ -1,6 +1,5 @@
 import logging
 from flask import Flask, request, make_response, Response
-from slack.errors import SlackApiError
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
