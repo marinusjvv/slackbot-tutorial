@@ -42,7 +42,14 @@ class Slash():
     expires = channelName.rpartition('-')[-1]
     expiresDate = datetime.strptime(expires, '%Y%m%d%H%M%S')
     expiresDate = expiresDate + relativedelta(weeks=+2)
-    self.sendResponse(slack_client, info, 'new expires at' + expiresDate.strftime('%Y-%m-%d %H:%M:%S'))
+
+    newChannelName = channelName.replace(expires, expiresDate.strftime('%Y-%m-%d %H:%M:%S'))
+
+    slack_client.conversations_rename(
+      channel_id=info["channel_id"],
+      name=newChannelName
+    )
+    self.sendResponse(slack_client, info, 'Channel bumped, new expiration date ' + expiresDate.strftime('%Y-%m-%d %H:%M:%S'))
 
   def processHelpCommand(self, slack_client, info):
     block = [
