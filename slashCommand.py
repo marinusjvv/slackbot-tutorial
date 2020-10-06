@@ -46,7 +46,7 @@ class Slash():
     newChannelName = channelName.replace(expires, expiresDate.strftime('%Y-%m-%d %H:%M:%S'))
 
     slack_client.conversations_rename(
-      channel_id=info["channel_id"],
+      channel=info["channel_id"],
       name=newChannelName
     )
     self.sendResponse(slack_client, info, 'Channel bumped, new expiration date ' + expiresDate.strftime('%Y-%m-%d %H:%M:%S'))
