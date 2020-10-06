@@ -15,6 +15,8 @@ class Slash():
   def processCommand(self, slack_client, info):
     if info['text'].startswith('create'):
       return self.processCreateCommand(slack_client, info)
+    if info['text'].startswith('bump'):
+      return self.processBumpCommand(slack_client, info)
 
   def processCreateCommand(self, slack_client, info):
     expiresDate = datetime.today() + relativedelta(months=+1)
@@ -32,6 +34,18 @@ class Slash():
       return make_response("", e.response.status_code)
 
     responseMessage = 'Created new channel #' + chanName + ' which expires ' + expiresDate.strftime('%Y-%m-%d %H:%M:%S')
+    return self.sendResponse(slack_client, info, responseMessage)
+
+  def processBumpCommand(self, slack_client, info):
+    if info["channel_name"] == 'directmessage' or not info["channel_name"].startswith('bump'):
+      return self.sendResponse(slack_client, info, 'Please use this command from a temporary channel')
+
+
+
+    #datetime.fromisoformat()
+    return self.sendResponse(slack_client, info, 'sweet as')
+
+  def sendResponse(self, slack_client, info, responseMessage):
     try:
       if info["channel_name"] == 'directmessage':
         im_id = slack_client.conversations_open(
