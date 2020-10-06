@@ -49,6 +49,7 @@ class Slash():
       channel=info["channel_id"],
       name=newChannelName
     )
+    info['channel_name'] = newChannelName
     self.sendResponse(slack_client, info, 'Channel bumped, new expiration date ' + expiresDate.strftime('%Y-%m-%d %H:%M:%S'))
 
   def processHelpCommand(self, slack_client, info):
