@@ -1,6 +1,8 @@
 import logging
 from flask import Flask, request, make_response, Response
 from slack.errors import SlackApiError
+from datetime import date
+from dateutil.relativedelta import relativedelta
 
 class Slash():
 
@@ -12,8 +14,11 @@ class Slash():
 
   def processCommand(self, slack_client, info):
     if info['text'].startswith('create'):
+      expiresDate = date.today() + relativedelta(months=+1)
+      logging.error(expiresDate.strftime('%Y-%m-%d'))
       chanName = info['text'].replace('create ','')
       chanName = chanName.replace(' ','-')
+      chanName = 'temp-' + chanName
 
       try:
         slack_client.conversations_create(
