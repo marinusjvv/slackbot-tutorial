@@ -37,7 +37,7 @@ class Slash():
     return self.sendResponse(slack_client, info, responseMessage)
 
   def processBumpCommand(self, slack_client, info):
-    if info["channel_name"] == 'directmessage' or not info["channel_name"].startswith('bump'):
+    if not info["channel_name"].startswith('temp-'):
       return self.sendResponse(slack_client, info, 'Please use this command from a temporary channel')
 
 
