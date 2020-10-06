@@ -65,12 +65,12 @@ class Slash():
       else:
         outChannel = '#{}'.format(info["channel_name"])
 
-      params = "%s='%s'"%(type, responseMessage)
-      slack_client.chat_postMessage(
-        channel=outChannel,
-        link_names=1,
-        params
-      )
+      kwargs = {
+        channel = outChannel,
+        link_names = 1,
+      }
+      kwargs[type] = responseMessage
+      slack_client.chat_postMessage(**kwargs)
     except SlackApiError as e:
       logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
       logging.error(e.response)
