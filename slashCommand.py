@@ -17,7 +17,7 @@ class Slash():
       expiresDate = date.today() + relativedelta(months=+1)
       chanName = info['text'].replace('create ','')
       chanName = chanName.replace(' ','-')
-      chanName = 'temp-' + chanName + expiresDate.strftime('%Y%m%d%H%i%s')
+      chanName = 'temp-' + chanName + expiresDate.strftime('%Y%m%d%H%M%S')
 
       try:
         slack_client.conversations_create(
