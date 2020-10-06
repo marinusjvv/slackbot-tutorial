@@ -25,11 +25,18 @@ class Slash():
         return make_response("", e.response.status_code)
 
       try:
-        slack_client.chat_postMessage(
-          channel='#{}'.format(info["channel_name"]),
-          text='Created new channel #' + chanName,
-          link_names=1
-        )
+        if info["channel_name"] == 'directmessage':
+          im_id = slack_client.im_open(user=info["user_id"])["channel"]["id"]
+          ownerMsg = slack_client.chat_postMessage(
+            channel=im_id,
+            text=commander.getMessage()
+          )
+        else:
+          slack_client.chat_postMessage(
+            channel='#{}'.format(info["channel_name"]),
+            text='Created new channel #' + chanName,
+            link_names=1
+          )
       except SlackApiError as e:
         logging.error('Request to Slack API Failed: {}.'.format(e.response.status_code))
         logging.error(e.response)
