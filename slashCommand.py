@@ -14,7 +14,7 @@ class Slash():
 
   def processCommand(self, slack_client, info):
     if info['text'].startswith('create'):
-      return processCreateCommand(slack_client, info)
+      return self.processCreateCommand(slack_client, info)
 
   def processCreateCommand(self, slack_client, info):
     expiresDate = datetime.today() + relativedelta(months=+1)
