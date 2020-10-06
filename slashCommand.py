@@ -66,8 +66,8 @@ class Slash():
         outChannel = '#{}'.format(info["channel_name"])
 
       kwargs = {
-        channel=outChannel,
-        link_names=1
+        "channel" = outChannel,
+        "link_names" = 1,
       }
       kwargs[type] = responseMessage
       slack_client.chat_postMessage(**kwargs)
