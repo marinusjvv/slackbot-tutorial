@@ -55,7 +55,7 @@ class Slash():
           "text": {
             "type": "plain_text",
             "text": "Some useful commands",
-            "emoji": true
+            "emoji": "true"
           }
         },
         {
