@@ -26,8 +26,11 @@ class Slash():
 
       try:
         if info["channel_name"] == 'directmessage':
-          im_id = slack_client.conversations_open(user=info["user_id"])["channel"]["id"]
           logging.error('AAAAAAAAAAAA')
+          logging.error(info["user_id"])
+          im_id = slack_client.conversations_open(
+            user=info["user_id"]
+          )["channel"]["id"]
           logging.error(im_id)
           ownerMsg = slack_client.chat_postMessage(
             channel=im_id,
