@@ -10,7 +10,7 @@ class Slash():
   def verify(self, request):
     return self.verifier.is_valid_request(request.get_data(), request.headers)
 
-  def message(self, slack_client, info):
+  def processCommand(self, slack_client, info):
     if info['text'].startswith('create'):
       chanName = info['text'].replace('create ','')
       chanName = chanName.replace(' ','-')
@@ -26,12 +26,9 @@ class Slash():
 
       try:
         if info["channel_name"] == 'directmessage':
-          logging.error('AAAAAAAAAAAA')
-          logging.error(info["user_id"])
           im_id = slack_client.conversations_open(
             users=info["user_id"]
           )["channel"]["id"]
-          logging.error(im_id)
           ownerMsg = slack_client.chat_postMessage(
             channel=im_id,
             text='Created new channel #' + chanName,
