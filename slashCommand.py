@@ -48,56 +48,54 @@ class Slash():
     return self.sendResponse(slack_client, info, 'sweet as')
 
   def processHelpCommand(self, slack_client, info):
-    block = {
-      "blocks": [
-        {
-          "type": "header",
-          "text": {
-            "type": "plain_text",
-            "text": "Some useful commands",
-            "emoji": "true"
-          }
-        },
-        {
-          "type": "divider"
-        },
-        {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "`create <channel name>` - Creates a temporary channel. Default life is 2 weeks"
-          }
-        },
-        {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "`bump` - Extends current channel's lifetime with 2 weeks"
-          }
-        },
-        {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "`delete` - Archives the current channel"
-          }
-        },
-        {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "`permanent` - Requests that this channel be changed to a permanent channel"
-          }
-        },
-        {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "`help` - Shows this help section"
-          }
+    block = [
+      {
+        "type": "header",
+        "text": {
+          "type": "plain_text",
+          "text": "Some useful commands",
+          "emoji": "true"
         }
-      ]
-    }
+      },
+      {
+        "type": "divider"
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`create <channel name>` - Creates a temporary channel. Default life is 2 weeks"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`bump` - Extends current channel's lifetime with 2 weeks"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`delete` - Archives the current channel"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`permanent` - Requests that this channel be changed to a permanent channel"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "`help` - Shows this help section"
+        }
+      }
+    ]
     return self.sendResponse(slack_client, info, block, 'blocks')
 
   def sendResponse(self, slack_client, info, responseMessage, type = 'text'):
