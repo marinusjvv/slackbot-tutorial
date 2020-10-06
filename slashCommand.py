@@ -43,7 +43,7 @@ class Slash():
     expiresDate = datetime.strptime(expires, '%Y%m%d%H%M%S')
     expiresDate = expiresDate + relativedelta(weeks=+2)
 
-    newChannelName = channelName.replace(expires, expiresDate.strftime('%Y-%m-%d %H:%M:%S'))
+    newChannelName = channelName.replace(expires, expiresDate.strftime('%Y%m%d%H%M%S'))
 
     slack_client.conversations_rename(
       channel=info["channel_id"],
